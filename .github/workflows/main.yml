@@ -9,15 +9,6 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-     # -
-       # name: Docker meta
-        #id: meta
-        #uses: docker/metadata-action@v3
-       # with:
-          # list of Docker images to use as base name for tags
-          #images: |
-           # vdeleon11/econ-145
-            #ghcr.io/vdeleon11/econ-145
       -
         name: Checkout
         uses: actions/checkout@v2
