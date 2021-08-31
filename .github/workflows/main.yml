@@ -46,8 +46,8 @@ jobs:
         with:
           context: .
           push: true
-          #tags: |
-            #vdeleon11/econ-145:latest
-            #vdeleon11/econ-145:1.0.0
-            #ghcr.io/v-deleon/econ-145:latest
-            #ghcr.io/v-deleon/econ-145:1.0.0
+          tags: |
+            vdeleon11/econ-145:latest
+            vdeleon11/econ-145:1.0.0
+            ghcr.io/v-deleon/econ-145:latest
+            ghcr.io/v-deleon/econ-145:1.0.0
