@@ -13,11 +13,19 @@ jobs:
         name: Checkout
         uses: actions/checkout@v2
       -
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
+      -   
+        name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            ghcr.io/v-deleon/econ-145
+          tags: |
+            type=raw,value=latest
+            type=sha
       -
         name: Login to DockerHub
         uses: docker/login-action@v1 
@@ -25,21 +33,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Login to GitHub Container Registry
-        uses: docker/login-action@v1 
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GHUB_TOKEN }}
-      -
         name: Build and push
+        id: docker_build
         uses: docker/build-push-action@v2
         with:
           context: .
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: |
-            vdeleon11/econ-145:latest
-            vdeleon11/econ-145:1.0.0
-            ghcr.io/v-deleon/econ-145:latest
-            ghcr.io/v-deleon/econ-145:1.0.0
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=ucsb/ling-110:latest
+          cache-to: type=registry,ref=ucsb/ling-110:buildcache,mode=max
