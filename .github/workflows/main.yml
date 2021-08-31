@@ -26,6 +26,10 @@ jobs:
           tags: |
             type=raw,value=latest
             type=sha
+            vdeleon11/econ-145:latest
+            vdeleon11/econ-145:1.0.0
+            ghcr.io/v-deleon/econ-145:latest
+            ghcr.io/v-deleon/econ-145:1.0.0
       -
         name: Login to DockerHub
         uses: docker/login-action@v1 
@@ -45,7 +49,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          #file: src/Dockerfile
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          push: true
+          #tags: |
+            #vdeleon11/econ-145:latest
+            #vdeleon11/econ-145:1.0.0
+            #ghcr.io/v-deleon/econ-145:latest
+            #ghcr.io/v-deleon/econ-145:1.0.0
