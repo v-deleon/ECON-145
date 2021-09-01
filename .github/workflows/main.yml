@@ -45,9 +45,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          push: true
-          tags: |
-            vdeleon11/econ-145:latest
-            vdeleon11/econ-145:1.0.0
-            ghcr.io/v-deleon/econ-145:latest
-            ghcr.io/v-deleon/econ-145:1.0.0
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
