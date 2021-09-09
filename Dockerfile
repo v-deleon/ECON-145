@@ -45,14 +45,14 @@ RUN pip install nbgitpuller okpy && \
 USER $NB_USER
 
 # REmoving some packages that are probably duplicated
-RUN R -e "install.packages(c('r-sf', 'r-units', 'r-stan', 'udunits2', 'majick', 'tidylog', 'tidytuesdayR', 'janitor', 'readxl', 'lubridate', 'lucid', 'magrittr', 'learnr', 'haven', 'summarytools', 'ggplot2', 'kableExtra', 'flextable', 'sandwich', 'sf', 'stargazer', 'viridis', 'titanic', 'labelled', 'Lahman', 'babynames', 'nasaweather', 'fueleconomy', 'mapproj', 'forcats', 'rvest', 'readxl', 'quantmod', 'polite', 'pdftools', 'ncfd4', 'modelsummary', 'maps', 'magritter', 'lubridate', 'lmtest', 'knitr', 'anytime', 'broom', 'devtools', 'fixest', 'ggmap', 'ggplot2', 'ggthemes', 'httr', 'janitor', 'jsonlite', 'kableExtra'), repos = 'http://cran.us.r-project.org')"
+RUN conda install -c conda-forge udunits2 libv8 r-rstan imagemagick r-sf
+RUN R -e "install.packages(c('rsf', 'units', 'udunits2', 'magick', 'tidylog', 'tidytuesdayR', 'janitor', 'readxl', 'lubridate', 'lucid', 'magrittr', 'learnr', 'haven', 'summarytools', 'ggplot2', 'kableExtra', 'flextable', 'sandwich', 'sf', 'stargazer', 'viridis', 'titanic', 'labelled', 'Lahman', 'babynames', 'nasaweather', 'fueleconomy', 'mapproj', 'forcats', 'rvest', 'readxl', 'quantmod', 'polite', 'pdftools', 'ncdf4', 'modelsummary', 'maps', 'lubridate', 'lmtest', 'knitr', 'anytime', 'broom', 'devtools', 'fixest', 'ggmap', 'ggplot2', 'ggthemes', 'httr', 'janitor', 'jsonlite', 'kableExtra'), repos = 'http://cran.us.r-project.org')"
 
 RUN R --quiet -e "devtools::install_github('UrbanInstitute/urbnmapr', dep=FALSE)"
-RUN R --quiet -e "devtools::install_github('rapporter/pander')"
+RUN R --quiet -e "devtools::install_github('Rapporter/pander')"
 
 # remove cache
 RUN rm -rf ~/.cache/pip ~/.cache/matplotlib ~/.cache/yarn && \
     conda clean --all -f -y && \
     fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER     
-#
+    fix-permissions /home/$NB_USER
